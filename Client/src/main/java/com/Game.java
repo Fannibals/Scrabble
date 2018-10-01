@@ -56,7 +56,6 @@ public class Game extends Application {
     public static boolean turn = false;
     public static Listener m1;
 
-
     public void start(Stage primaryStage) throws Exception {
         primaryStageObj = primaryStage;
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/login.fxml"));
@@ -150,10 +149,12 @@ public class Game extends Application {
         sendmsg(message);
     }
 
-    public static void voting(boolean votingResult) {
+    public static void voting(boolean votingResult,String name,String word) {
         Message message = new Message();
         message.setPlayerStatus(PlayerStatus.IN_GAME);
         message.setPlayerAction(PlayerAction.VOTING);
+        message.setClientName(name);
+        message.setGameWord(word);
         message.setVotingResult(votingResult);
         sendmsg(message);
     }
@@ -203,12 +204,12 @@ public class Game extends Application {
     public static String horizontal(int location,String[] board){
         String word = board[location];
         int index = location;
-        while ((index % 20 != 0)&&(!board[index-1].equals("0"))){
+        while (((index-1) % 20 != 0)&&(!board[index-1].equals(""))){
             index = index -1;
             word = board[index] +word;
         }
         index = location;
-        while ((index % 20 != 0) && (!board[index+1].equals("0"))){
+        while (((index+1 % 20) != 0) && (!board[index+1].equals(""))){
             index = index+1;
             word = word+board[index];
         }
@@ -217,12 +218,12 @@ public class Game extends Application {
     public static String vertical(int location,String[] board){
         String word = board[location];
         int index = location;
-        while ((index < 20) && (!board[index-20].equals("0"))){
+        while ((index < 20) && (!board[index-20].equals(""))){
             index = index - 20;
-            word = board[index] +word;
+            word = board[index] + word;
         }
         index = location;
-        while ((index >379) && (!board[index+20].equals("0"))){
+        while ((index >379) && (!board[index+20].equals(""))){
             index = index + 20;
             word = board[index] +word;
         }
